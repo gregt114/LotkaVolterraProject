@@ -57,4 +57,4 @@ ax.grid()
 # plt.show()
 
 # Save plot to image file
-plt.savefig("fig3.png")
+plt.savefig("images/fig3.png")
