@@ -40,8 +40,8 @@ xs,ys = np.meshgrid(np.linspace(0,xbound, n), np.linspace(0, ybound, n))
 dX,dY = lotka(0, (xs,ys), a,b,g,d)  # X,Y derivatives at each point
 
 # Plotting
-plt.streamplot(xs, ys, dX, dY, density=2, color=np.sqrt(dX**2 + dY**2), cmap="inferno")
-plt.scatter([0, g/d], [0, a/b], c="red", s=34)
+ax.streamplot(xs, ys, dX, dY, density=2, color=np.sqrt(dX**2 + dY**2), cmap="inferno")
+ax.scatter([0, g/d], [0, a/b], c="red", s=34)
 
 ax.set_title(f"Lotka Voltera System: a={a:.2f}, b={b:.2f}, g={g}, d={d}")
 ax.set_xlabel("Prey")
