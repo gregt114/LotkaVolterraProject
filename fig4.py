@@ -10,9 +10,10 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 # Create figure and axes
-fig = plt.figure(figsize=[10,6])
-ax1 = fig.add_subplot(1,2,1)
-ax2 = fig.add_subplot(1,2,2)
+fig = plt.figure(figsize=[16,8])
+ax1 = fig.add_subplot(1,3,1)
+ax2 = fig.add_subplot(1,3,2)
+ax3 = fig.add_subplot(1,3,3)
 
 # ODE System
 def lotka(t, vector, a, b, g, d, k):
@@ -26,24 +27,27 @@ def lotka(t, vector, a, b, g, d, k):
 
 # Phase Plane parameters
 xbound = 8
-ybound = 3
+ybound = 8
 n      = 800
 
 
 # Chosen parameters for system (in order: a, b, g, d, k)
-p1s = [1, 1, 3, 1, 2]
-p2s = [1, 1, 2, 1, 2]
+p1s = [1, 1, 1, 1, 2]
+p2s = [8, 1, 1, 1, 2]
+p3s = [12, 1, 1, 1, 2]
 
-for pair in [(ax1, p1s), (ax2, p2s)]:
+for pair in [(ax1, p1s), (ax2, p2s), (ax3, p3s)]:
     # Unpack data
     ax, ps    = pair
     a,b,g,d,k = ps
     
     # Logic for displaying correct title based on parameter values
-    if(d*k-g < 0):
-        title = r"$\mathbf{\delta k - \gamma < 0}$" + f"  (a={a}, b={b}, g={g}, d={d}, k={k})"
-    elif(d*k-g == 0):
-        title = r"$\mathbf{\delta k - \gamma = 0}$" + f"  (a={a}, b={b}, g={g}, d={d}, k={k})"
+    if(a < 4*d*k*(d*k-g)/g):
+        title = r"$\mathbf{a < \frac{4\delta k (\delta k -\gamma)}{\gamma}}$" + f"  (a={a}, b={b}, g={g}, d={d}, k={k})"
+    elif(a == 4*d*k*(d*k-g)/g):
+        title = r"$\mathbf{a = \frac{4\delta k (\delta k -\gamma)}{\gamma}}$" + f"  (a={a}, b={b}, g={g}, d={d}, k={k})"
+    else:
+        title = r"$\mathbf{a > \frac{4\delta k (\delta k -\gamma)}{\gamma}}$" + f"  (a={a}, b={b:}, g={g}, d={d}, k={k})"
 
 
     # Solve system
@@ -67,4 +71,4 @@ for pair in [(ax1, p1s), (ax2, p2s)]:
 plt.tight_layout()
 
 # Save plot to image file
-plt.savefig("images/fig3.png")
+plt.savefig("images/fig4.png")
