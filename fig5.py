@@ -1,10 +1,9 @@
 """
-Plots a particular solution to the food chain system
+Plots particular solutions to the food chain system
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-# from mpl_toolkits import mplot3d
 from scipy.integrate import solve_ivp
 
 
@@ -37,7 +36,7 @@ tf = 20
 pts = 8000
 
 # Set up graph
-fig = plt.figure(figsize=[12,12])
+fig = plt.figure(figsize=[10,14])
 ax1 = fig.add_subplot(3, 1, 1, projection='3d')
 ax2 = fig.add_subplot(3, 1, 2, projection='3d')
 ax3 = fig.add_subplot(3, 1, 3, projection='3d')
@@ -56,12 +55,12 @@ for pair in [(ax1,p1s), (ax2, p2s), (ax3, p3s)]:
     a, b, g, d, m, n, p = ps[0], ps[1], ps[2], ps[3], ps[4], ps[5], ps[6]
 
     # Solve system for 2 different ICs
-    for IC in [(0.2, 0.2, 0.2), (2,2,2), (3,3,1)]:
+    for IC in [(0.1, 0.1, 0.1), (2,2,2), (3,1,3)]:
         # Unpack ICs
         x0, y0, z0 = IC
 
         # Solve system and plot solution
-        soln = solve_ivp(lotka, (t0,tf), (x0,y0,z0), method="RK45", t_eval=np.linspace(t0,tf,pts), args=(a,b,d,g,m,n,p))
+        soln = solve_ivp(lotka, (t0,tf), (x0,y0,z0), method="LSODA", t_eval=np.linspace(t0,tf,pts), args=(a,b,d,g,m,n,p), jac=jac)
         xs = soln.y[0]
         ys = soln.y[1]
         zs = soln.y[2]
@@ -87,8 +86,8 @@ for pair in [(ax1,p1s), (ax2, p2s), (ax3, p3s)]:
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")
-    ax.legend()
+    ax.legend(loc="upper left")
     i += 1
 
-plt.tight_layout()
+fig.tight_layout(h_pad=4)
 plt.show()
