@@ -1,5 +1,5 @@
 """
-Plots the phase plane to the improved
+Plots the phase plane to the logistic
 Lotka-Volterra system
 """
 
@@ -17,7 +17,7 @@ ax2 = fig.add_subplot(1,2,2)
 # ODE System
 def lotka(t, vector, a, b, g, d, k):
     """
-    The Improved Lotka-Volterra system with
+    The Logistic Lotka-Volterra system with
     parameters alpha(a), beta(b), gamma(g), and delta(d).
     """
     x,y = vector    # unpack input vector
